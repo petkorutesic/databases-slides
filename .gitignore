@@ -1,0 +1,8 @@
+hosts
+*.ip
+*private*
+.terraform
+node_modules/
+other lectures/
+*.tfstate*
+*.retry
