@@ -25,7 +25,7 @@ To put it simple:
 ---
 
 ## Relational model concepts
-Database represented as collection of **relations**
+Database represented as a collection of **relations**
  - a table is called  a **relation**
  - a raw is called a **tuple**
  - a column is called an **attribute** 
@@ -59,10 +59,10 @@ Example:
 
 ---
 ## Relation (relation state)
-A relation state $r$ of a relation $R=(A_1,A_2,...,A_n)$ denoted as $r(R)$
+A **relation** (**relation state**) $r$ of a relation schema $R=(A_1,A_2,...,A_n)$ denoted as $r(R)$
 is a **set** of tuples $r = {t_1,t_2,...,t_m}$
-- tuple is an ordered list of $t = <v_1,v_2,...,v_m>$ $n$ values where each value 
-- holds   $v_i \in dom(A_i)$ or $v_i\ is\  NULL$ as a special value
+- tuple is an ordered list of $t = <v_1,v_2,...,v_n>$ $n$ values  
+-  $v_i \in dom(A_i)$ or $v_i\ is\  NULL$ as a special value
 
 corresponding terms used:
 - *relation intension* - for relation schema $R$ 
@@ -88,8 +88,7 @@ If $A_1, A_2,..., A_n$ are sets. An n-ary **relation** over sets $A_1, A_2,..., 
 is the *subset* of the *n-ary Cartesian product* of those sets.
 $$R \subseteq \\{A_1 \times A_2 \times ... \times A_n\\}$$
 <br/>
-In relational algebra it's called *relation state* and in a case of more sets  we 
-have n-ary relation :
+In relational algebra we say *relation* or*relation state* we have:
 $$r(R) \subseteq (dom(A_1) × dom(A_2) × ... × dom(A_n))$$
 - total number of values (rows), or **cardinality** is 
 <br/>
@@ -138,7 +137,7 @@ Boolean logic truth tables with nulls:
  null | $\bot$ | $\bot$
  null | null | null 
  
-The logical expression with AND can never be true if one of the relations is undefined.
+The logical expression with AND can never be true if one of the operands is undefined.
  - True and null gives an unknown value
  - however, can be false
 
@@ -159,7 +158,7 @@ Boolean logic truth table for the logical operator **OR** with nulls:
  null | $\bot$ | null
  null | null | null
 
-The logical expression OR can never be false if one of relations is undefined.
+The logical expression OR can never be false if one of operands is undefined.
  - False and null gives an unknown value
  - however, can be true
 
@@ -200,7 +199,7 @@ that is not a superkey of R any more.
 Key satisfies two conditions:
 1. no two tuples in any state of the relation can have 
 identical values of all attributes in the key
-2. it is a *minimal superkey* - such that removing any attributes 
+2. it is a *minimal superkey* - removing any attributes 
 from it violates the uniqueness constraint in condition 1.
 
 a key is also a superkey but not vice versa
@@ -210,7 +209,7 @@ a key is also a superkey but not vice versa
 A relation schema may have more keys and in that case we call them
 **candidate keys**.
 
-Def:A **Primary key** is one of candidate keys whose values are used
+Def:A **primary key** is one of candidate keys whose values are used
 to identify tuples in the relation.
 - we can denote primary key as underlined set of attributes
 - other candidate keys which are not the primary key are called **unique keys**<br/>
@@ -265,13 +264,15 @@ Foreign keys can also refer to its own relation
 
 ![Customer-Order-Table](img/relationalmodel/customer-for-foreign-key.png)
 
+foreign key(CUSTOMER_ID) references CUSTOMER
+
 Note: All students can make an example
 
 ---
 ## Functional dependency constraint
 Given two sets of attributes X and Y. A **functional dependency** 
 denoted by $X \rightarrow Y $, holds if :
-$$\forall t_1,t_2 \in r(R) : t_1[X]=t_2[X]   \implies t_1[Y]=t_2[Y]$$
+$$\forall t_i,t_j \in r(R) : t_i[X]=t_j[X]   \implies t_i[Y]=t_j[Y]$$
 - values of X determine unique values of Y
 
 In common parlance:
@@ -293,7 +294,7 @@ The following holds:
 <!-- .element style="font-size: 70%;" -->
 
 ---
-## Functional dependency inference rules
+## Functional dependency inference rules (Armstrong's axioms)
 * Reflexivity: $Y \subset X  \implies X \rightarrow Y$
 * Augmentation: $X \rightarrow Y  \implies XZ \rightarrow YZ$
 * Transitivity: $X \rightarrow Y \land Y \rightarrow Z \implies X \rightarrow Z$
