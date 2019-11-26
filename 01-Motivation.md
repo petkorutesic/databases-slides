@@ -78,6 +78,7 @@ Note: Convenient (physical data independence, high level query languages)
 ### Question 
 Which functions should have an application for storing 
 data of customers? 
+
 How would you implement these functions?
 ---
 
@@ -342,8 +343,7 @@ Most DBMS support three-schema to some some extent
 **capacity to change** the schema at one level of a database system
 without having to change schema at the next higher level
 - **Logical data independence**
-  - capacity to change the conceptual schema without changing external schemas  
-  or application programs
+  - capacity to change the conceptual schema without changing external schemas or application programs
   - examples: adding or removing constraints, record types or data items
 - **Physical data independence**
   - capacity to change the internal schema without having to change 
@@ -449,8 +449,6 @@ Main criterion for used for classification is the data model
   - What is the difference between a database schema and a database state?
   - What is difference between logical and physical data independence?
   - Define the term database management system?
-
----
-
-
-
+  - What are disadvantages of the traditional file processing storage?
+  - In which scenarios features of DBMS are not desirable?  
+  - Explain components of the database system architecture?

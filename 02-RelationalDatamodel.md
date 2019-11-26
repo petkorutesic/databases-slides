@@ -323,3 +323,8 @@ $r_i$ is a relation state of $R_i$ and satisfy all constraints in IC.
     2. Update operation
     3. Delete operation 
 ---
+## Review questions
+-  Explain the notation of Relation and its components? 
+-  How are the terms of functional dependency and key related?
+-  What is the difference between key and superkey?
+-  Clarify the difference between relation intension and relation extension?

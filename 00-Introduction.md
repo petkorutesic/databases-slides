@@ -12,7 +12,7 @@
         <a style="font-size: .7em; font-weight: normal;"> petko.rutesic@dhbw-mannheim.de</a>
         <br/>
         <br/>
-        <a style="font-size: .7em; font-weight: normal;"> according to slides of Prof. Dr. Julian Reichwald</a>
+        <a style="font-size: .7em; font-weight: normal;"> structure according to slides of Prof. Dr. Julian Reichwald</a>
 </div>
 
 ---
@@ -66,5 +66,3 @@ McGraw-Hill, 2011. ISBN-13 978-0-07-352332-3
 Following tools are used during lectues:
 - [PostgreSQL](https://www.postgresql.org)
 - [pgAdmin4](https://www.pgadmin.org)
-
----
