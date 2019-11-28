@@ -41,9 +41,8 @@ Binary operations:
 - Union $\cup$
 - Intersection $\cap$
 - Set Difference $-$
-- Cross Join $\bowtie$ 
+- Cartesian product (Cross Join) $\times$ 
 - Join  $\bowtie$
-- Cartesian product $\times$
 
 ---
 ## The Select operation  ($\sigma$)   
@@ -120,7 +119,7 @@ Note: Intermediate result naming is used
 If a list of attributes $\<list2\>$ contains attributes in  $\<list1\>$ 
 $$\pi_{\<list1\>}(\pi_{\<list2\>}(R)) = \pi\_{\<list1\>}(R))$$
 Relational algebra has relational expressions always as sets
-- by contrast, SQL considers multisets or bags
+- by contrast, SQL considers *multisets* or *bags*
 - that's why corresponding SQL has to use DISTINCT
  to be equivalent to the project operation
 
@@ -202,7 +201,7 @@ is a relation that includes all tuples that are in R but not in Q.
 ![Set difference](img/relationalalgebra/setdifference.png)
 
 Question: Does it hold in general? <br/>
-$|R-S| > |R| - |S|$
+$|R-S| \geq |R| - |S|$
 Note: Ask what is the cardinality of set difference?
 ---
 ## The Cartesian Product (Cross product)
@@ -380,6 +379,7 @@ $$\rho(DNo,numEmployees,avgSalary) (_{DNo} g _{COUNT\ ssn,AVERAGE\ salary} (EMPL
 
 ![Aggregations](img/relationalalgebra/aggregates.png)
 
+Aggregate functions cannot be expressed in basic relational algebra
 
 ---
 ## Review questions  
