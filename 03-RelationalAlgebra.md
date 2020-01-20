@@ -81,7 +81,7 @@ in SQL, *select operation* is typically specified in WHILE clause (**not** in th
   FROM EMPLOYEE
   WHERE DN0=4 AND SALARY > 30000 
 ```
-  $$\sigma_{Dno="1"\ \land\ Salary>30000}(Employee)$$
+  $$\sigma_{Dno="4"\ \land\ Salary>30000}(Employee)$$
   
 Note: Here should give an example of a more complex operator
 

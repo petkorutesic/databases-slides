@@ -131,7 +131,7 @@ Boolean
 Date 
  - DATE (in the form YYYY-MM-DD)
  - TIME ( with 10 positions of in the form HH:MM:SS ex. '09:12:47' )
- - DATATIME (TIMESTAMP postgresql)  (year, month, day, hour, minute, second and second parts  ) 
+ - DATETIME (TIMESTAMP postgresql)  (year, month, day, hour, minute, second and second parts  ) 
    '2019-12-12 09:12:47.242'
  
 ---
@@ -202,7 +202,7 @@ CHECK (Class_num > 0 and Class_num < 5)
 Operators used with CHECK
  - comparison operators  =, <, <=, >, >=, <>
  - [NOT] IN (\<list of values\>)
- - [NOT] BETWEEN (\<range of values\>)  - *(incluseve)*
+ - [NOT] BETWEEN (\<range of values\>)  - *(inclusive)*
  - [NOT] LIKE (\<text pattern\>)
 
 Example:
@@ -538,7 +538,7 @@ SQL allows the user to rename a relation, attributes or both.
 
 ```
 SELECT S.ssn AS s_ssn, 
-       S.first_name || S.last_name as s_name
+       S.first_name ||' '|| S.last_name as s_name,
        S.class AS s_class
 FROM Student AS S
 ```
@@ -713,5 +713,139 @@ FROM Employee E JOIN Employee S
 ```
 <!--.element style="margin-left: 20px; font-size: 70%"-->
 
+---
+## Nested queries
+Nested queries are used when queries require that existing values be fetched 
+and than used in comparisons. 
+ - query is comprised of the *nested* and the *outer* query.
+ - tuples of values can be used in comparisons if we place them in parentheses as 
+ illustrated in the following query
+
+```
+SELECT DISTINCT Essn
+FROM WORKS_ON
+WHERE (Pno, Hours) IN ( SELECT Pno, Hours
+                        FROM WORKS_ON
+                        WHERE Essn=‘123456789');
+```
+<!--.element style="margin-left: 20px; font-size: 80%"-->
+The query lists the ssn of all employees which work the same (Project,Hours) combination 
+as the employee with the given essn ‘123456789' in the nested query  
 
 
+
+---
+## Operators for nested queries
+In addition to the IN operator, comparison can be done using other 
+operators:
+ - ANY ( some SOME) - =, >, >=, <, <=, <> can be used with this operators 
+ - = ANY - returns true if the value is equal to some value in the nested set   
+ - \> ALL - returns true if the value is greater than all values from the nested query
+ - [NOT] EXISTS - used for correlated queries
+
+<!--.element style="margin-left: 20px; font-size: 94%"-->
+```
+SELECT Lname, Fname
+FROM EMPLOYEE
+WHERE Salary > ALL ( SELECT Salary
+                     FROM EMPLOYEE
+                     WHERE Dno=5 );
+```
+<!--.element style="margin-left: 20px; font-size: 70%"-->
+Previous query selects the names of all employees having salary greater than 
+salary of all employees in the specified department
+
+---
+## Grouping and aggregation
+**Aggregate functions** are used to summarize data from multiple tuples into a single 
+tuple. 
+Mostly used with the grouping which makes distinct groups to be 
+summarized.
+
+Important built in aggregate functions are:
+ - COUNT - returns number of tuples or values  
+ - SUM  -  returns the sum of all values 
+ - MAX - returns the maximum value in the set (multiset) 
+ - MIN - returns minimum value in the set of values 
+ - AVG - gives the average(mean) of the set of attribute values
+ 
+<!--.element style="margin-left: 20px; font-size: 90%"-->
+**GROUP BY** clause is used to group tuples according to different attribute values
+   - for each distinct value is created a new group 
+   - output attributes can be  only those in the group by clause and in the aggregate functions
+   
+<!--.element style="margin-left: 20px; font-size: 90%"-->
+---
+## Grouping and aggregation examples
+Simple grouping query to count a number of freshman students.
+
+```
+SELECT Class_num, COUNT(*) Num_of_students
+FROM STUDENT 
+GROUP BY Class_num
+HAVING Class_num=1; 
+```
+
+
+<!--.element style="margin-left: 20px; font-size: 70%"-->
+
+Aggregate functions can be used in correlated nested queries as in the 
+following example
+```
+SELECT name
+FROM EMPLOYEE E
+WHERE ( SELECT COUNT (*)
+        FROM DEPENDENT D
+        WHERE E.Ssn=D.Essn ) >= 2;
+```
+<!--.element style="margin-left: 20px; font-size: 70%"-->
+Note: Show to students that this works for nulls as well but not for FName cannot be 
+ extracted
+
+---
+## Views (Virtual tables)
+A view is a **virtual table** derived from one or more other tables or views.
+ - a view isn't  necessarily physically stored in the database as a base tables
+ - update operations on views are limited
+
+```
+CREATE VIEW Department_info
+AS 
+SELECT Dname, COUNT(*), SUM(Salary) 
+FROM Department d, Employee e
+WHERE d.Dnumber = e.Dno 
+GROUP BY Dname
+```
+<!--.element style="margin-left: 20px; font-size:75%"-->
+
+Queries are specified on views in the same way as on base tables.   
+```
+SELECT * FROM Department_info 
+WHERE Total_salary>130000;
+```
+<!--.element style="margin-left: 20px; font-size:75%"-->
+
+
+
+---
+## Indexes
+Indexes are a part of the physical organization of database 
+ - primarily used to enhance database performance by improving
+ query execution
+ - when used inappropriate can result in slower performance
+
+
+```
+CREATE UNIQUE INDEX matr_number_idx 
+ON Student (matr_number);
+```
+<!--.element style="margin-left: 20px; font-size:80%"-->
+
+ - unique constraint is automatically created when a primary
+ key or unique constraint are defined for a table
+ - partial index is an index that contains only part of a table 
+   partial index is created with using WHERE clause
+Create a unique index on the column matr_number in the table Student.
+
+
+---

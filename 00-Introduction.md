@@ -49,9 +49,13 @@ After successfully completing the module students should be able to:
 
 ---
 # Prüfungsform
-
-
-> Exam: 120 minutes 
+Continuous assessment
+- **Project** (database application): 20 points <br/>
+   - design of a database
+   - the database implementation in PostgreSQL
+   - web application to access the database
+- **Homeworks**: 5 bonus points<br/>
+- **Exam**: 100 points (100 minutes) 
 
 ---
 ## Literature
