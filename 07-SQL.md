@@ -830,13 +830,14 @@ WHERE Total_salary>130000;
 ---
 ## Indexes
 Indexes are a part of the physical organization of database 
+ - is a data structure that improves the speed of data retrieval
+   operations
  - primarily used to enhance database performance by improving
  query execution
  - when used inappropriate can result in slower performance
 
-
 ```
-CREATE UNIQUE INDEX matr_number_idx 
+CREATE INDEX matr_number_idx 
 ON Student (matr_number);
 ```
 <!--.element style="margin-left: 20px; font-size:80%"-->
@@ -847,5 +848,80 @@ ON Student (matr_number);
    partial index is created with using WHERE clause
 Create a unique index on the column matr_number in the table Student.
 
+---
+
+## Stored procedures  
+**Stored procedures and functions** are code elements which
+extend plain SQL with procedural elements e.g. control
+structures, loops and complex calculations
+ - PostgreSQL comes with  PL/pgSQL procedure language
+
+```
+CREATE FUNCTION function_name(<argument_list>)
+ RETURNS type AS
+BEGIN
+  staments;
+END;
+LANGUAGE 'language_name';
+```
+<!--.element style="margin-left: 20px; font-size:80%"-->
 
 ---
+## Triggers
+Triggers are stored procedures which automatically invoke when 
+a special event in the database occurs
+ - can be invoked when a raw is inserted(updated or deleted) into a table 
+ - can be used to track changes made to tables or to enforce business rules
+
+```
+CREATE TRIGGER [trigger_name] 
+[BEFORE | AFTER]  
+{INSERT | UPDATE | DELETE}  
+ON [table_name]  
+[FOR EACH ROW]  
+[TRIGGER_BODY]
+```
+<!--.element style="margin-left: 20px; font-size:80%"-->
+---
+## Trigger example
+Trigger function can be defined in two steps:
+```
+CREATE OR REPLACE FUNCTION student_last_name_change()
+RETURNS trigger AS
+$BODY$
+BEGIN
+   IF NEW.student_name <> OLD.student_name THEN
+     INSERT INTO Student_audit(id, student_name, changed_on) 
+     values(OLD.id, OLD.student_name, now());
+   END IF;
+RETURN NEW;
+END;
+$BODY$
+```
+<!--.element style="margin-left: 20px; font-size:70%"-->
+
+```
+CREATE TRIGGER student_lname_trigger 
+BEFORE UPDATE ON Student
+FOR EACH ROW EXECUTE PROCEDURE student_last_name_change();
+```
+<!--.element style="margin-left: 20px; font-size:70%"-->
+
+
+---
+## Review questions
+ - Describe the six clauses in the syntax of an SQL retrieval query.
+
+```
+SELECT
+FROM
+WHERE
+GROUP BY
+HAVING 
+ORDER BY
+```
+<!--.element style="margin-left: 20px; font-size:70%"-->
+ - How are NULLs treated in comparison operators in SQL?
+ - How are NULLs treated when aggregate functions are applied?
+ - Explain how aggregate functions and grouping are used. Which
+ aggregate functions we mentioned?
